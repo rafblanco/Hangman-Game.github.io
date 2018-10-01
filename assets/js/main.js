@@ -1,16 +1,17 @@
+//Global Variables
 
-var words = ["khaleesi", "maester", "greyscale", "wildlings", "kingslayer", "hound", "snow", "sesteros"]
+var words = ["khaleesi", "maester", "greyscale", "wildlings", "kingslayer", "hound", "snow", "westeros"];
+//Wins 
+var winsText = document.getElementById("wins");
 var wins = 0;
-//Chances Left
-var chancesLeft = document.getElementById("chances");
+winsText.textContent = wins;
 
+//Chances Left
+var chances = document.getElementById("chances");
+var chancesLeft = 12;
 
 //Current Word
-var currentWord = document.getElementById("current-word");
-var wordArray = [];
 var chosenWord;
-var newUnder = [];
-
 
 // Wrong Letter
 var wrongChoice = document.getElementById("wrong-letter");
@@ -19,62 +20,78 @@ var wrongChoice = document.getElementById("wrong-letter");
 var keyLogged = [];
 
 
-    // When the page loads the hangman function will occur
-// Randomize word and print out the underscores for the length of the word 
-window.onload = function newWord() {
+
+// Randomize word 
+function newWord() {
+
     // a random choice from words will be put into variable
     chosenWord = words[Math.floor(Math.random() * words.length)];
-    // The underscores randomChoice.length
-    wordArray = chosenWord.split("");
-    for (var i = 0; i < wordArray.length; i++) {
-        //Make an array of underscore
-        newUnder.push("_");
-        currentWord.textContent= newUnder.join(" ");
+
+    keyLogged = [];
+    // //Displays the chances left
+    chancesLeft = 12;
+    chances.textContent = chancesLeft;
+    wrongChoice.textContent = "";
+};
+
+// When the page loads the function will occur
+window.onload = newWord();
+
+// When user presses key a variable holds it
+var good_letters = [];
+var print_word = "";
+//Function that prints out the letters and underscores 
+function print() {
+    print_word = "";
+    document.getElementById("current-word").textContent = print_word;
+    for (var i = 0; i < chosenWord.length; i++) {
+        if (good_letters.indexOf(chosenWord[i]) > -1) {
+            print_word += "" + chosenWord[i] + "";
+        } else {
+            print_word += "_";
+        }
     }
-    //Displays the chances left
-    chancesLeft.textContent = 12;
-    
+    document.getElementById("current-word").textContent = print_word;
+}
 
-
-
-    // When user presses key a variable holds it
-    document.onkeyup = function (event) {
-        var keyPressed = event.key.toLowerCase();
-        
-
+document.onkeyup = function (event) {
+    var keyPressed = event.key.toLowerCase();
+    // if chances left is zero then 
+    if (chancesLeft === 0) {
         //If the keypressed is in keyLogged
-        if ( keyLogged.indexOf(keyPressed) > -1) {
-            return false; 
+        newWord();
+    } else {  
+        if (keyLogged.indexOf(keyPressed) > -1) {
+            return false;
         }
         else {
             keyLogged.push(keyPressed);
         }
 
-        //if the keypressed is in the chosen word 
-        if (chosenWord.indexOf(keyPressed) > -1) {
-            //replace the _ with the letter at the same index 
-            // find where exactly in the array it is and add that key to the DOM
-            
+        if (print_word.includes(chosenWord)) {
+            wins += 1;
+            winText.textContent = wins;
+            newWord();
+            print();
+
         } else {
-            // wrongChoice.append = keypressed;
-            wrongChoice.textContent += keyPressed;
-            //chancesLeft --; 
-            chancesLeft.textContent -= 1;   
-        }
-        // if all of the underscores 
-        if (newUnder.indexOf("_")){
-            wins.textContent += 1;
-            // newWord();
-        }
+           if (chosenWord.indexOf(keyPressed) > -1) {
+                good_letters.push(keyPressed)
+            } else {
+                wrongChoice.textContent += " " + keyPressed;
+                chancesLeft -= 1;
+                chances.textContent = chancesLeft;
+            }
+        } 
+    }        
 
-        // if chances left is zero then 
-        if (chancesLeft === 0){
-            //have a reset function
-
-        }
+    
 
 
-        // when a win happens then an image of that person will appear
 
-    };
+
+    // when a win happens then an image of that person will appear
+
+    print();
 };
+print();

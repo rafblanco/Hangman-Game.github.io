@@ -1,14 +1,56 @@
-/* @font-face {
+@font-face {
     font-family: 'game_of_thronesregular';
-    src: url('game_of_thrones-webfont.woff2') format('woff2'),
-         url('game_of_thrones-webfont.woff') format('woff');
+    src: url('../font/webfontkit/game_of_thrones-webfont.woff') format('woff2'),
+         url('../font/webfontkit/game_of_thrones-webfont.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
-  h1 {
-    font-family: 'game_of_thronesregular';
-    font-style: normal;
-  }
+body, html {
+    /* The image used */
+    background-image: url("../images/background-image.jpg");
+
+    /* Full height */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+body {
+  font-family: 'game_of_thronesregular';
+  font-style: normal;
+  letter-spacing: 0.1em;
+}
+
+header , section{
+  margin: auto;
+  text-align: center;
+  color: white;
+  line-height: 1.5rem;
+}
+header {
+  padding: 30px;
+}
+
+h1{
+  font-size: 38px;
+}
+
+section {
+  background-color: rgba(119, 136, 153, 0.473);
+  width: 50%;
+  padding: 20px;
+}
+
+hr {
+  color: white;
+}
+
+#current-word {
+  letter-spacing: 5px;
+}
 
